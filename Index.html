@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hacking Console</title>
+
+<style>
+    body {
+        margin: 0;
+        background: black;
+        color: #00ff00;
+        font-family: "Courier New", monospace;
+        overflow: hidden;
+    }
+
+    /* MATRIX FALLING EFFECT */
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    #terminal {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.5);
+        overflow-y: scroll;
+        font-size: 16px;
+        line-height: 1.3em;
+        text-shadow: 0 0 8px #0f0;
+    }
+
+    /* Screen Shake */
+    @keyframes shake {
+        0% { transform: translate(0, 0); }
+        20% { transform: translate(-5px, 5px); }
+        40% { transform: translate(5px, -5px); }
+        60% { transform: translate(-5px, -5px); }
+        80% { transform: translate(5px, 5px); }
+        100% { transform: translate(0, 0); }
+    }
+</style>
+</head>
+
+<body onload="startHacking()">
+
+<canvas id="matrix"></canvas>
+<div id="terminal"></div>
+
+<script>
+/* MATRIX EFFECT */
+var canvas = document.getElementById("matrix");
+var ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+var chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*+=-";
+chars = chars.split("");
+
+var fontSize = 15;
+var columns = canvas.width / fontSize;
+
+var drops = [];
+for (var x = 0; x < columns; x++) drops[x] = 1;
+
+function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#0F0";
+    ctx.font = fontSize + "px monospace";
+
+    for (var i = 0; i < drops.length; i++) {
+        var text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.95) 
+            drops[i] = 0;
+
+        drops[i]++;
+    }
+}
+setInterval(drawMatrix, 40);
+
+
+/* TERMINAL HACKING TEXT */
+var terminal = document.getElementById("terminal");
+
+let lines = [
+    "[Accessing Secure Server...]",
+    "[Bypassing Firewall...]",
+    "[Injecting Payload...]",
+    "[Establishing Remote Connection...]",
+    "[LOADING MALWARE MODULE 42%]",
+    "[COMPILING EXPLOIT PACKAGE...]",
+    "[Uploading...]",
+    "[SUCCESS]",
+    ">> SYSTEM BREACH INITIATED",
+    ">> DOWNLOADING DATA...",
+    ">> DATA EXTRACTION: 14GB COMPLETE",
+    ">> DECRYPTING FILES...",
+    ">> ROOT ACCESS GRANTED",
+    "*** WARNING: SYSTEM COMPROMISED ***",
+    "*** TRACKING USER LOCATION ***",
+    "*** ACTIVATING CAMERA MODULE ***",
+    "*** UPLOADING TO DARKNET ***"
+];
+
+let i = 0;
+
+function startHacking() {
+    terminal.innerHTML = "";
+    hackLoop();
+}
+
+function hackLoop() {
+    if (i < lines.length) {
+        let p = document.createElement("div");
+        p.textContent = lines[i];
+        terminal.appendChild(p);
+        terminal.scrollTop = terminal.scrollHeight;
+
+        // Random screen shake for fear effect
+        if (Math.random() > 0.8) {
+            document.body.style.animation = "shake 0.3s";
+            setTimeout(() => { document.body.style.animation = ""; }, 300);
+        }
+
+        i++;
+        setTimeout(hackLoop, 300 + Math.random() * 500);
+    } else {
+        // Infinite random code flowing
+        setInterval(() => {
+            let p = document.createElement("div");
+            p.textContent = ">> " + Math.random().toString(36).substring(2, 25);
+            terminal.appendChild(p);
+            terminal.scrollTop = terminal.scrollHeight;
+        }, 100);
+    }
+}
+</script>
+
+</body>
+</html>
