@@ -1,151 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hacking Console</title>
-
-<style>
-    body {
-        margin: 0;
-        background: black;
-        color: #00ff00;
-        font-family: "Courier New", monospace;
-        overflow: hidden;
-    }
-
-    /* MATRIX FALLING EFFECT */
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-    }
-
-    #terminal {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-        z-index: 2;
-        background: rgba(0, 0, 0, 0.5);
-        overflow-y: scroll;
-        font-size: 16px;
-        line-height: 1.3em;
-        text-shadow: 0 0 8px #0f0;
-    }
-
-    /* Screen Shake */
-    @keyframes shake {
-        0% { transform: translate(0, 0); }
-        20% { transform: translate(-5px, 5px); }
-        40% { transform: translate(5px, -5px); }
-        60% { transform: translate(-5px, -5px); }
-        80% { transform: translate(5px, 5px); }
-        100% { transform: translate(0, 0); }
-    }
-</style>
-</head>
-
-<body onload="startHacking()">
-
-<canvas id="matrix"></canvas>
-<div id="terminal"></div>
-
-<script>
-/* MATRIX EFFECT */
-var canvas = document.getElementById("matrix");
-var ctx = canvas.getContext("2d");
-
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-
-var chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*+=-";
-chars = chars.split("");
-
-var fontSize = 15;
-var columns = canvas.width / fontSize;
-
-var drops = [];
-for (var x = 0; x < columns; x++) drops[x] = 1;
-
-function drawMatrix() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#0F0";
-    ctx.font = fontSize + "px monospace";
-
-    for (var i = 0; i < drops.length; i++) {
-        var text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.95) 
-            drops[i] = 0;
-
-        drops[i]++;
-    }
-}
-setInterval(drawMatrix, 40);
-
-
-/* TERMINAL HACKING TEXT */
-var terminal = document.getElementById("terminal");
-
-let lines = [
-    "[Accessing Secure Server...]",
-    "[Bypassing Firewall...]",
-    "[Injecting Payload...]",
-    "[Establishing Remote Connection...]",
-    "[LOADING MALWARE MODULE 42%]",
-    "[COMPILING EXPLOIT PACKAGE...]",
-    "[Uploading...]",
-    "[SUCCESS]",
-    ">> SYSTEM BREACH INITIATED",
-    ">> DOWNLOADING DATA...",
-    ">> DATA EXTRACTION: 14GB COMPLETE",
-    ">> DECRYPTING FILES...",
-    ">> ROOT ACCESS GRANTED",
-    "*** WARNING: SYSTEM COMPROMISED ***",
-    "*** TRACKING USER LOCATION ***",
-    "*** ACTIVATING CAMERA MODULE ***",
-    "*** UPLOADING TO DARKNET ***"
-];
-
-let i = 0;
-
-function startHacking() {
-    terminal.innerHTML = "";
-    hackLoop();
-}
-
-function hackLoop() {
-    if (i < lines.length) {
-        let p = document.createElement("div");
-        p.textContent = lines[i];
-        terminal.appendChild(p);
-        terminal.scrollTop = terminal.scrollHeight;
-
-        // Random screen shake for fear effect
-        if (Math.random() > 0.8) {
-            document.body.style.animation = "shake 0.3s";
-            setTimeout(() => { document.body.style.animation = ""; }, 300);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCESS SYSTEM - SPIDTRICK GROUP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+        
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Courier New', monospace;
+            color: #0f0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .terminal-container {
+            width: 90%;
+            max-width: 900px;
+            height: 80vh;
+            background-color: #000;
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            box-shadow: 0 0 20px #0f0, inset 0 0 10px rgba(0, 255, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .terminal-header {
+            background-color: #111;
+            padding: 10px;
+            border-bottom: 1px solid #0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .terminal-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #0f0;
+        }
+        
+        .terminal-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .control-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .close {
+            background-color: #ff5f56;
+        }
+        
+        .minimize {
+            background-color: #ffbd2e;
+        }
+        
+        .maximize {
+            background-color: #27c93f;
+        }
+        
+        .terminal-body {
+            padding: 15px;
+            height: calc(100% - 45px);
+            overflow-y: auto;
+        }
+        
+        .terminal-text {
+            line-height: 1.5;
+            font-size: 16px;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .glitch {
+            position: relative;
+            animation: glitch 5s infinite;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            1% { transform: translate(-1px, 1px); }
+            2% { transform: translate(-1px, -1px); }
+            3% { transform: translate(1px, 1px); }
+            4% { transform: translate(1px, -1px); }
+            5% { transform: translate(0); }
+            100% { transform: translate(0); }
+        }
+        
+        .processing {
+            color: #0ff;
+            font-style: italic;
+        }
+        
+        .warning {
+            color: #ff0;
+            font-weight: bold;
+        }
+        
+        .success {
+            color: #0f0;
+            font-weight: bold;
+        }
+        
+        .error {
+            color: #f00;
+            font-weight: bold;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #0f0;
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #0c0;
+            box-shadow: 0 0 10px #0f0;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .credentials {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #111;
+            border: 1px solid #0f0;
+            border-radius: 3px;
+        }
+        
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .prompt {
+            color: #0f0;
+            margin-right: 10px;
+        }
+        
+        .cmd-input {
+            background-color: transparent;
+            border: none;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+        }
+        
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to bottom, transparent, #0f0, transparent);
+            top: 0;
+            left: 0;
+            animation: scan 4s linear infinite;
+            z-index: 1;
+            opacity: 0.7;
+        }
+        
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0;
+        }
+        
+        .danger-text {
+            color: #f00;
+            text-shadow: 0 0 5px #f00;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .flashing {
+            animation: flash 0.5s infinite;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .password-field {
+            letter-spacing: 2px;
+            font-family: monospace;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0f0;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="scan-line"></div>
+        <div class="matrix-bg" id="matrixBg"></div>
+        
+        <div class="terminal-header">
+            <div class="terminal-title">
+                <i class="fas fa-terminal"></i> SPIDTRICK GROUP - SECURE ACCESS TERMINAL
+            </div>
+            <div class="terminal-controls">
+                <div class="control-btn close"></div>
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+            </div>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="terminal-text" id="terminalText">
+                <!-- Content will be dynamically added here -->
+            </div>
+            
+            <div class="input-line hidden" id="inputLine">
+                <span class="prompt">root@spidtrick:~$ </span>
+                <input type="text" class="cmd-input" id="cmdInput" autocomplete="off" autofocus>
+            </div>
+        </div>
+    </div>
 
-        i++;
-        setTimeout(hackLoop, 300 + Math.random() * 500);
-    } else {
-        // Infinite random code flowing
-        setInterval(() => {
-            let p = document.createElement("div");
-            p.textContent = ">> " + Math.random().toString(36).substring(2, 25);
-            terminal.appendChild(p);
-            terminal.scrollTop = terminal.scrollHeight;
-        }, 100);
-    }
-}
-</script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const terminalText = document.getElementById('terminalText');
+            const inputLine = document.getElementById('inputLine');
+            const cmdInput = document.getElementById('cmdInput');
+            const matrixBg = document.getElementById('matrixBg');
+            
+            // Create matrix background effect
+            createMatrixEffect();
+            
+            // Initial delay before starting
+            setTimeout(startHackingSequence, 1000);
+            
+            function createMatrixEffect() {
+                const chars = "01";
+                let matrixText = "";
+                
+                for (let i = 0; i < 1000; i++) {
+                    matrixText += chars.charAt(Math.floor(Math.random() * chars.length));
+                    if ((i + 1) % 100 === 0) matrixText += "\n";
+                }
+                
+                matrixBg.textContent = matrixText;
+            }
+            
+            function startHackingSequence() {
+                // Step 1: Initial message
+                typeText("Initializing secure connection...", 50, function() {
+                    setTimeout(function() {
+                        typeText("Connection established with SPIDTRICK servers...", 50, function() {
+                            setTimeout(function() {
+                                typeText("Sending encrypted message...", 40, function() {
+                                    setTimeout(function() {
+                                        // Step 2: Show the main message
+                                        typeText("<br><span class='warning'>send to coleader of usa spidtrick group shaon Khondkar</span>", 30, function() {
+                                            setTimeout(function() {
+                                                // Step 3: Processing message
+                                                typeText("<br><br><span class='processing'>Processing...</span>", 40, function() {
+                                                    setTimeout(function() {
+                                                        // Step 4: Show waiting button
+                                                        showWaitingButton();
+                                                    }, 2000);
+                                                });
+                                            }, 1000);
+                                        });
+                                    }, 1000);
+                                });
+                            }, 1000);
+                        });
+                    }, 1000);
+                });
+            }
+            
+            function typeText(text, speed, callback) {
+                let i = 0;
+                const isHTML = text.includes('<');
+                
+                if (isHTML) {
+                    // For HTML content, we need to handle tags differently
+                    let tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = text;
+                    const fullText = tempDiv.textContent;
+                    
+                    function typeChar() {
+                        if (i < fullText.length) {
+                            if (i === 0) {
+                                terminalText.innerHTML += "<span class='typewriter'>";
+                            }
+                            
+                            // Get the current text in terminal
+                            const currentHTML = terminalText.innerHTML;
+                            // Remove the closing span if present
+                            const withoutClosingSpan = currentHTML.replace("</span>", "");
+                            // Add the next character
+                            terminalText.innerHTML = withoutClosingSpan + fullText.charAt(i) + "</span>";
+                            
+                            i++;
+                            setTimeout(typeChar, speed);
+                        } else {
+                            // Replace the temporary span with the actual HTML
+                            terminalText.innerHTML = terminalText.innerHTML.replace(/<span class='typewriter'>.*<\/span>/, text);
+                            
+                            // Scroll to bottom
+                            terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                            
+                            if (callback) callback();
+                        }
+                    }
+                    
+                    typeChar();
+                } else {
+                    // Plain text typing
+                    terminalText.innerHTML += "<span class='typewriter'>";
+                    
+                    function typeChar() {
+                        if (i < text.length) {
+                            terminalText.innerHTML = terminalText.innerHTML.replace(/<\/span>$/, "") + text.charAt(i) + "</span>";
+                            i++;
+                            setTimeout(typeChar, speed);
+                        } else {
+                            terminalText.innerHTML += "<br>";
+                            // Scroll to bottom
+                            terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                            
+                            if (callback) callback();
+                        }
+                    }
+                    
+                    typeChar();
+                }
+            }
+            
+            function showWaitingButton() {
+                const buttonHTML = "<br><br><button class='btn glitch flashing' id='waitingBtn'><i class='fas fa-skull-crossbones'></i> WAITING FOR ACCESS RESPONSE</button>";
+                terminalText.innerHTML += buttonHTML;
+                
+                // Scroll to bottom
+                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                
+                // Add click event to button
+                document.getElementById('waitingBtn').addEventListener('click', function() {
+                    // Disable button
+                    this.disabled = true;
+                    this.innerHTML = "<i class='fas fa-cog fa-spin'></i> PROCESSING...";
+                    this.classList.remove('flashing');
+                    
+                    // Step 5: Show processing after button click
+                    setTimeout(function() {
+                        terminalText.innerHTML += "<br><br><span class='processing'>Decrypting security protocols...</span>";
+                        terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                        
+                        setTimeout(function() {
+                            terminalText.innerHTML += "<br><span class='processing'>Bypassing firewalls...</span>";
+                            terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                            
+                            setTimeout(function() {
+                                terminalText.innerHTML += "<br><span class='processing'>Accessing core systems...</span>";
+                                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                                
+                                setTimeout(function() {
+                                    // Step 6: Show access granted
+                                    terminalText.innerHTML += "<br><br><span class='success glitch'>ACCESS GRANTED ☑️</span>";
+                                    terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                                    
+                                    setTimeout(function() {
+                                        // Step 7: Show credentials
+                                        showCredentials();
+                                    }, 1500);
+                                }, 1500);
+                            }, 1500);
+                        }, 1500);
+                    }, 1500);
+                });
+            }
+            
+            function showCredentials() {
+                const credentialsHTML = `
+                    <br><br>
+                    <div class="credentials danger-text">
+                        <span class="warning"><i class="fas fa-exclamation-triangle"></i> SECURITY CLEARANCE OBTAINED</span><br><br>
+                        <span>Login: <span class="password-field">khnshaonkhondokar8682</span></span><br>
+                        <span>Password: <span class="password-field">spidotech</span></span><br><br>
+                        <span class="error">WARNING: Unauthorized access is strictly prohibited!</span>
+                    </div>
+                    <br>
+                    <span class="processing">System ready for command input...</span>
+                    <br><br>
+                    <span class="warning">Type any command to continue. Type 'help' for available commands.</span>
+                `;
+                
+                terminalText.innerHTML += credentialsHTML;
+                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                
+                // Show input line after a delay
+                setTimeout(function() {
+                    inputLine.classList.remove('hidden');
+                    cmdInput.focus();
+                    
+                    // Set up command input
+                    setupCommandInput();
+                }, 1000);
+            }
+            
+            function setupCommandInput() {
+                cmdInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        const command = this.value.trim();
+                        
+                        if (command) {
+                            // Add command to terminal
+                            terminalText.innerHTML += `<br><br><span class="prompt">root@spidtrick:~$</span> ${command}`;
+                            
+                            // Process command
+                            processCommand(command);
+                            
+                            // Clear input
+                            this.value = '';
+                            
+                            // Scroll to bottom
+                            terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                        }
+                    }
+                });
+            }
+            
+            function processCommand(command) {
+                let response = "";
+                
+                switch(command.toLowerCase()) {
+                    case 'help':
+                        response = `<br><span class="processing">Available commands:</span><br>
+                                    <span>• help - Show this help message</span><br>
+                                    <span>• status - Check system status</span><br>
+                                    <span>• clear - Clear terminal screen</span><br>
+                                    <span>• members - List group members</span><br>
+                                    <span>• exit - Close connection</span>`;
+                        break;
+                        
+                    case 'status':
+                        response = `<br><span class="success">System Status: OPERATIONAL</span><br>
+                                    <span>Security Level: MAXIMUM</span><br>
+                                    <span>Connection: ENCRYPTED</span><br>
+                                    <span>Access: ROOT PRIVILEGES</span>`;
+                        break;
+                        
+                    case 'clear':
+                        terminalText.innerHTML = '';
+                        return;
+                        
+                    case 'members':
+                        response = `<br><span class="processing">SPIDTRICK GROUP MEMBERS:</span><br>
+                                    <span>• Shaon Khondkar (Co-leader, USA)</span><br>
+                                    <span>• [REDACTED] (Leader)</span><br>
+                                    <span>• [REDACTED] (Security Head)</span><br>
+                                    <span>• [REDACTED] (Tech Specialist)</span><br>
+                                    <span>• [REDACTED] (Intel Officer)</span>`;
+                        break;
+                        
+                    case 'exit':
+                        response = `<br><span class="error">Terminating connection...</span>`;
+                        setTimeout(function() {
+                            document.body.innerHTML = `<div class="danger-text" style="text-align: center; padding: 50px; font-size: 24px;">
+                                <i class="fas fa-skull-crossbones"></i><br><br>
+                                CONNECTION TERMINATED<br>
+                                SYSTEM SECURED
+                            </div>`;
+                        }, 2000);
+                        break;
+                        
+                    default:
+                        response = `<br><span class="error">Command not recognized: ${command}</span><br>
+                                    <span>Type 'help' for available commands</span>`;
+                }
+                
+                terminalText.innerHTML += response;
+                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+            }
+            
+            // Add some random glitch effects
+            setInterval(function() {
+                if (Math.random() > 0.7) {
+                    document.querySelector('.terminal-container').classList.add('glitch');
+                    setTimeout(function() {
+                        document.querySelector('.terminal-container').classList.remove('glitch');
+                    }, 100);
+                }
+            }, 3000);
+        });
+    </script>
 </body>
 </html>
