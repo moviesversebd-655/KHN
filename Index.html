@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACCESS SYSTEM - SPIDTRICK GROUP</title>
+    <title>ADVANCED HACKING SYSTEM - SPIDTRICK</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -24,13 +24,13 @@
         }
         
         .terminal-container {
-            width: 90%;
-            max-width: 900px;
-            height: 80vh;
+            width: 95%;
+            max-width: 1000px;
+            height: 85vh;
             background-color: #000;
             border: 2px solid #0f0;
             border-radius: 5px;
-            box-shadow: 0 0 20px #0f0, inset 0 0 10px rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 30px #0f0, inset 0 0 15px rgba(0, 255, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -244,6 +244,163 @@
             font-family: monospace;
         }
         
+        /* Progress Bar Styles */
+        .progress-container {
+            margin: 20px 0;
+            background-color: #111;
+            border: 1px solid #0f0;
+            border-radius: 3px;
+            padding: 10px;
+        }
+        
+        .progress-bar {
+            width: 0%;
+            height: 20px;
+            background-color: #0f0;
+            border-radius: 2px;
+            transition: width 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: progress-shine 2s infinite;
+        }
+        
+        @keyframes progress-shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-text {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #0f0;
+        }
+        
+        /* Radar Styles */
+        .radar-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .radar {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 2px solid #0f0;
+            position: relative;
+            background: radial-gradient(circle, rgba(0, 20, 0, 0.8) 0%, rgba(0, 0, 0, 0.9) 70%);
+            overflow: hidden;
+        }
+        
+        .radar-line {
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #0f0);
+            top: 50%;
+            left: 0;
+            transform-origin: 100% 50%;
+            animation: radar-sweep 3s linear infinite;
+        }
+        
+        @keyframes radar-sweep {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .radar-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #f00;
+            border-radius: 50%;
+            animation: radar-dot-pulse 2s infinite;
+        }
+        
+        @keyframes radar-dot-pulse {
+            0%, 100% { box-shadow: 0 0 5px #f00; }
+            50% { box-shadow: 0 0 15px #f00; }
+        }
+        
+        /* Camera Footage Styles */
+        .camera-container {
+            margin: 20px 0;
+            border: 3px solid #f00;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .camera-footage {
+            width: 100%;
+            height: 300px;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .camera-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(255,0,0,0.1) 0%, rgba(0,255,0,0.1) 100%);
+            pointer-events: none;
+        }
+        
+        .camera-timestamp {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: #0f0;
+            font-size: 12px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2px 5px;
+            border-radius: 2px;
+        }
+        
+        .camera-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #f00;
+            font-size: 12px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2px 5px;
+            border-radius: 2px;
+        }
+        
+        /* Typing Animation Styles */
+        .typing-container {
+            margin: 20px 0;
+            background-color: #111;
+            border: 1px solid #0ff;
+            border-radius: 3px;
+            padding: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .typing-line {
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #0ff;
+        }
+        
         /* Scrollbar styling */
         ::-webkit-scrollbar {
             width: 10px;
@@ -270,7 +427,7 @@
         
         <div class="terminal-header">
             <div class="terminal-title">
-                <i class="fas fa-terminal"></i> SPIDTRICK GROUP - SECURE ACCESS TERMINAL
+                <i class="fas fa-terminal"></i> SPIDTRICK GROUP - ADVANCED HACKING SYSTEM
             </div>
             <div class="terminal-controls">
                 <div class="control-btn close"></div>
@@ -284,7 +441,7 @@
                 <!-- Content will be dynamically added here -->
             </div>
             
-            <div class="input-line hidden" id="inputLine">
+            <div class="input-line" id="inputLine">
                 <span class="prompt">root@spidtrick:~$ </span>
                 <input type="text" class="cmd-input" id="cmdInput" autocomplete="off" autofocus>
             </div>
@@ -301,8 +458,11 @@
             // Create matrix background effect
             createMatrixEffect();
             
-            // Initial delay before starting
-            setTimeout(startHackingSequence, 1000);
+            // Show initial message
+            showInitialMessage();
+            
+            // Set up command input
+            setupCommandInput();
             
             function createMatrixEffect() {
                 const chars = "01";
@@ -316,162 +476,18 @@
                 matrixBg.textContent = matrixText;
             }
             
-            function startHackingSequence() {
-                // Step 1: Initial message
-                typeText("Initializing secure connection...", 50, function() {
-                    setTimeout(function() {
-                        typeText("Connection established with SPIDTRICK servers...", 50, function() {
-                            setTimeout(function() {
-                                typeText("Sending encrypted message...", 40, function() {
-                                    setTimeout(function() {
-                                        // Step 2: Show the main message
-                                        typeText("<br><span class='warning'>send to coleader of usa spidtrick group shaon Khondkar</span>", 30, function() {
-                                            setTimeout(function() {
-                                                // Step 3: Processing message
-                                                typeText("<br><br><span class='processing'>Processing...</span>", 40, function() {
-                                                    setTimeout(function() {
-                                                        // Step 4: Show waiting button
-                                                        showWaitingButton();
-                                                    }, 2000);
-                                                });
-                                            }, 1000);
-                                        });
-                                    }, 1000);
-                                });
-                            }, 1000);
-                        });
-                    }, 1000);
-                });
-            }
-            
-            function typeText(text, speed, callback) {
-                let i = 0;
-                const isHTML = text.includes('<');
-                
-                if (isHTML) {
-                    // For HTML content, we need to handle tags differently
-                    let tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = text;
-                    const fullText = tempDiv.textContent;
-                    
-                    function typeChar() {
-                        if (i < fullText.length) {
-                            if (i === 0) {
-                                terminalText.innerHTML += "<span class='typewriter'>";
-                            }
-                            
-                            // Get the current text in terminal
-                            const currentHTML = terminalText.innerHTML;
-                            // Remove the closing span if present
-                            const withoutClosingSpan = currentHTML.replace("</span>", "");
-                            // Add the next character
-                            terminalText.innerHTML = withoutClosingSpan + fullText.charAt(i) + "</span>";
-                            
-                            i++;
-                            setTimeout(typeChar, speed);
-                        } else {
-                            // Replace the temporary span with the actual HTML
-                            terminalText.innerHTML = terminalText.innerHTML.replace(/<span class='typewriter'>.*<\/span>/, text);
-                            
-                            // Scroll to bottom
-                            terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
-                            
-                            if (callback) callback();
-                        }
-                    }
-                    
-                    typeChar();
-                } else {
-                    // Plain text typing
-                    terminalText.innerHTML += "<span class='typewriter'>";
-                    
-                    function typeChar() {
-                        if (i < text.length) {
-                            terminalText.innerHTML = terminalText.innerHTML.replace(/<\/span>$/, "") + text.charAt(i) + "</span>";
-                            i++;
-                            setTimeout(typeChar, speed);
-                        } else {
-                            terminalText.innerHTML += "<br>";
-                            // Scroll to bottom
-                            terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
-                            
-                            if (callback) callback();
-                        }
-                    }
-                    
-                    typeChar();
-                }
-            }
-            
-            function showWaitingButton() {
-                const buttonHTML = "<br><br><button class='btn glitch flashing' id='waitingBtn'><i class='fas fa-skull-crossbones'></i> WAITING FOR ACCESS RESPONSE</button>";
-                terminalText.innerHTML += buttonHTML;
-                
-                // Scroll to bottom
-                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
-                
-                // Add click event to button
-                document.getElementById('waitingBtn').addEventListener('click', function() {
-                    // Disable button
-                    this.disabled = true;
-                    this.innerHTML = "<i class='fas fa-cog fa-spin'></i> PROCESSING...";
-                    this.classList.remove('flashing');
-                    
-                    // Step 5: Show processing after button click
-                    setTimeout(function() {
-                        terminalText.innerHTML += "<br><br><span class='processing'>Decrypting security protocols...</span>";
-                        terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
-                        
-                        setTimeout(function() {
-                            terminalText.innerHTML += "<br><span class='processing'>Bypassing firewalls...</span>";
-                            terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
-                            
-                            setTimeout(function() {
-                                terminalText.innerHTML += "<br><span class='processing'>Accessing core systems...</span>";
-                                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
-                                
-                                setTimeout(function() {
-                                    // Step 6: Show access granted
-                                    terminalText.innerHTML += "<br><br><span class='success glitch'>ACCESS GRANTED ☑️</span>";
-                                    terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
-                                    
-                                    setTimeout(function() {
-                                        // Step 7: Show credentials
-                                        showCredentials();
-                                    }, 1500);
-                                }, 1500);
-                            }, 1500);
-                        }, 1500);
-                    }, 1500);
-                });
-            }
-            
-            function showCredentials() {
-                const credentialsHTML = `
-                    <br><br>
-                    <div class="credentials danger-text">
-                        <span class="warning"><i class="fas fa-exclamation-triangle"></i> SECURITY CLEARANCE OBTAINED</span><br><br>
-                        <span>Login: <span class="password-field">khnshaonkhondokar8682</span></span><br>
-                        <span>Password: <span class="password-field">spidotech</span></span><br><br>
-                        <span class="error">WARNING: Unauthorized access is strictly prohibited!</span>
-                    </div>
-                    <br>
-                    <span class="processing">System ready for command input...</span>
-                    <br><br>
-                    <span class="warning">Type any command to continue. Type 'help' for available commands.</span>
+            function showInitialMessage() {
+                const initialMessage = `
+                    <span class="warning">===============================================</span><br>
+                    <span class="success">SPIDTRICK ADVANCED HACKING SYSTEM v3.2.1</span><br>
+                    <span class="warning">===============================================</span><br><br>
+                    <span>Type any command to initiate hacking sequence...</span><br>
+                    <span class="processing">System ready for command input...</span><br><br>
+                    <span class="warning">Type 'help' for available commands or any text to start hacking sequence</span><br>
                 `;
                 
-                terminalText.innerHTML += credentialsHTML;
+                terminalText.innerHTML = initialMessage;
                 terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
-                
-                // Show input line after a delay
-                setTimeout(function() {
-                    inputLine.classList.remove('hidden');
-                    cmdInput.focus();
-                    
-                    // Set up command input
-                    setupCommandInput();
-                }, 1000);
             }
             
             function setupCommandInput() {
@@ -483,70 +499,282 @@
                             // Add command to terminal
                             terminalText.innerHTML += `<br><br><span class="prompt">root@spidtrick:~$</span> ${command}`;
                             
-                            // Process command
-                            processCommand(command);
-                            
                             // Clear input
                             this.value = '';
                             
-                            // Scroll to bottom
-                            terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                            // Process command
+                            if (command.toLowerCase() === 'help') {
+                                showHelp();
+                            } else if (command.toLowerCase() === 'clear') {
+                                terminalText.innerHTML = '';
+                                showInitialMessage();
+                            } else if (command.toLowerCase() === 'exit') {
+                                showExitMessage();
+                            } else {
+                                // Start hacking sequence for any other command
+                                startHackingSequence(command);
+                            }
                         }
                     }
                 });
             }
             
-            function processCommand(command) {
-                let response = "";
+            function showHelp() {
+                const helpText = `
+                    <br><span class="processing">Available commands:</span><br>
+                    <span>• [any text] - Start hacking sequence</span><br>
+                    <span>• help - Show this help message</span><br>
+                    <span>• clear - Clear terminal screen</span><br>
+                    <span>• exit - Close connection</span><br>
+                `;
                 
-                switch(command.toLowerCase()) {
-                    case 'help':
-                        response = `<br><span class="processing">Available commands:</span><br>
-                                    <span>• help - Show this help message</span><br>
-                                    <span>• status - Check system status</span><br>
-                                    <span>• clear - Clear terminal screen</span><br>
-                                    <span>• members - List group members</span><br>
-                                    <span>• exit - Close connection</span>`;
-                        break;
-                        
-                    case 'status':
-                        response = `<br><span class="success">System Status: OPERATIONAL</span><br>
-                                    <span>Security Level: MAXIMUM</span><br>
-                                    <span>Connection: ENCRYPTED</span><br>
-                                    <span>Access: ROOT PRIVILEGES</span>`;
-                        break;
-                        
-                    case 'clear':
-                        terminalText.innerHTML = '';
-                        return;
-                        
-                    case 'members':
-                        response = `<br><span class="processing">SPIDTRICK GROUP MEMBERS:</span><br>
-                                    <span>• Shaon Khondkar (Co-leader, USA)</span><br>
-                                    <span>• [REDACTED] (Leader)</span><br>
-                                    <span>• [REDACTED] (Security Head)</span><br>
-                                    <span>• [REDACTED] (Tech Specialist)</span><br>
-                                    <span>• [REDACTED] (Intel Officer)</span>`;
-                        break;
-                        
-                    case 'exit':
-                        response = `<br><span class="error">Terminating connection...</span>`;
-                        setTimeout(function() {
-                            document.body.innerHTML = `<div class="danger-text" style="text-align: center; padding: 50px; font-size: 24px;">
-                                <i class="fas fa-skull-crossbones"></i><br><br>
-                                CONNECTION TERMINATED<br>
-                                SYSTEM SECURED
-                            </div>`;
-                        }, 2000);
-                        break;
-                        
-                    default:
-                        response = `<br><span class="error">Command not recognized: ${command}</span><br>
-                                    <span>Type 'help' for available commands</span>`;
+                terminalText.innerHTML += helpText;
+                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+            }
+            
+            function showExitMessage() {
+                terminalText.innerHTML += `<br><br><span class="error">Terminating connection...</span>`;
+                setTimeout(function() {
+                    document.body.innerHTML = `<div class="danger-text" style="text-align: center; padding: 50px; font-size: 24px;">
+                        <i class="fas fa-skull-crossbones"></i><br><br>
+                        CONNECTION TERMINATED<br>
+                        SYSTEM SECURED
+                    </div>`;
+                }, 2000);
+            }
+            
+            function startHackingSequence(command) {
+                // Disable input during sequence
+                cmdInput.disabled = true;
+                
+                // Step 1: Show progress bar from 0% to 100%
+                showProgressBar(command);
+            }
+            
+            function showProgressBar(command) {
+                terminalText.innerHTML += `<br><br><span class="warning">Initiating hacking sequence for target: ${command}</span><br>`;
+                
+                const progressHTML = `
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                        <div class="progress-text" id="progressText">Initializing... 0%</div>
+                    </div>
+                `;
+                
+                terminalText.innerHTML += progressHTML;
+                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                
+                const progressBar = document.getElementById('progressBar');
+                const progressText = document.getElementById('progressText');
+                
+                let progress = 0;
+                const interval = setInterval(function() {
+                    progress += 1;
+                    progressBar.style.width = `${progress}%`;
+                    progressText.textContent = `Hacking in progress... ${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        progressText.innerHTML = `<span class="success">Hacking complete! 100%</span>`;
+                        setTimeout(() => {
+                            // Step 2: Start 30 seconds of automatic typing
+                            startAutoTyping();
+                        }, 1000);
+                    }
+                }, 50); // 50ms * 100 = 5 seconds total
+            }
+            
+            function startAutoTyping() {
+                terminalText.innerHTML += `<br><br><span class="processing">Establishing secure connection...</span><br>`;
+                
+                const typingHTML = `
+                    <div class="typing-container" id="typingContainer">
+                        <div class="typing-line">Initializing data stream...</div>
+                    </div>
+                `;
+                
+                terminalText.innerHTML += typingHTML;
+                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                
+                const typingContainer = document.getElementById('typingContainer');
+                const lines = [
+                    "[+] Bypassing firewall... SUCCESS",
+                    "[+] Accessing mainframe... SUCCESS",
+                    "[+] Decrypting security protocols... SUCCESS",
+                    "[+] Extracting user credentials... SUCCESS",
+                    "[+] Accessing database... SUCCESS",
+                    "[+] Downloading sensitive data... IN PROGRESS",
+                    "[+] Establishing backdoor... SUCCESS",
+                    "[+] Covering tracks... SUCCESS",
+                    "[+] Encrypting connection... SUCCESS",
+                    "[+] Accessing camera feeds... IN PROGRESS",
+                    "[+] Locating target... SUCCESS",
+                    "[+] Extracting location data... SUCCESS",
+                    "[+] Accessing network logs... SUCCESS",
+                    "[+] Downloading communication records... IN PROGRESS",
+                    "[+] Accessing financial records... SUCCESS",
+                    "[+] Extracting transaction history... SUCCESS",
+                    "[+] Accessing personal files... SUCCESS",
+                    "[+] Downloading media files... IN PROGRESS",
+                    "[+] Establishing persistent access... SUCCESS",
+                    "[+] Finalizing data extraction... SUCCESS"
+                ];
+                
+                let lineIndex = 0;
+                const typingInterval = setInterval(function() {
+                    if (lineIndex < lines.length) {
+                        const line = document.createElement('div');
+                        line.className = 'typing-line';
+                        line.textContent = lines[lineIndex];
+                        typingContainer.appendChild(line);
+                        typingContainer.scrollTop = typingContainer.scrollHeight;
+                        lineIndex++;
+                    }
+                }, 1500); // 30 seconds total for 20 lines
+                
+                setTimeout(function() {
+                    clearInterval(typingInterval);
+                    terminalText.innerHTML += `<br><span class="success">Data extraction complete!</span>`;
+                    terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                    
+                    // Step 3: 10 seconds processing
+                    startProcessing();
+                }, 30000); // 30 seconds
+            }
+            
+            function startProcessing() {
+                terminalText.innerHTML += `<br><br><span class="processing">Processing extracted data...</span><br>`;
+                
+                let dots = 0;
+                const processingInterval = setInterval(function() {
+                    dots = (dots + 1) % 4;
+                    const dotsText = ".".repeat(dots);
+                    const processingElement = terminalText.querySelector('.processing:last-child');
+                    if (processingElement) {
+                        processingElement.textContent = `Processing extracted data${dotsText}`;
+                    }
+                }, 500);
+                
+                setTimeout(function() {
+                    clearInterval(processingInterval);
+                    terminalText.innerHTML += `<br><span class="success">Data processing complete!</span>`;
+                    terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                    
+                    // Step 4: 30 seconds radar analysis
+                    startRadarAnalysis();
+                }, 10000); // 10 seconds
+            }
+            
+            function startRadarAnalysis() {
+                terminalText.innerHTML += `<br><br><span class="warning">Initiating radar analysis...</span><br>`;
+                
+                const radarHTML = `
+                    <div class="radar-container">
+                        <div class="radar" id="radar">
+                            <div class="radar-line"></div>
+                            <!-- Radar dots will be added dynamically -->
+                        </div>
+                    </div>
+                    <div class="progress-text" id="radarText">Scanning for targets... 0%</div>
+                `;
+                
+                terminalText.innerHTML += radarHTML;
+                terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                
+                const radar = document.getElementById('radar');
+                const radarText = document.getElementById('radarText');
+                
+                // Add random dots to radar
+                for (let i = 0; i < 8; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'radar-dot';
+                    dot.style.left = `${10 + Math.random() * 80}%`;
+                    dot.style.top = `${10 + Math.random() * 80}%`;
+                    radar.appendChild(dot);
                 }
                 
-                terminalText.innerHTML += response;
+                let radarProgress = 0;
+                const radarInterval = setInterval(function() {
+                    radarProgress += 1;
+                    radarText.textContent = `Scanning for targets... ${radarProgress}%`;
+                    
+                    if (radarProgress >= 100) {
+                        clearInterval(radarInterval);
+                        radarText.innerHTML = `<span class="success">Radar analysis complete! 100%</span>`;
+                        setTimeout(() => {
+                            // Step 5: Show CC camera footage
+                            showCameraFootage();
+                        }, 1000);
+                    }
+                }, 300); // 30 seconds total
+            }
+            
+            function showCameraFootage() {
+                terminalText.innerHTML += `<br><br><span class="danger-text">ACCESSING SECURITY CAMERA FEED...</span><br>`;
+                
+                // Create a fake camera footage with red tint and static
+                const cameraHTML = `
+                    <div class="camera-container">
+                        <div class="camera-footage" id="cameraFootage">
+                            <div class="camera-overlay"></div>
+                            <div class="camera-label">CAM-04 | FLOOR-3 | SECTOR-B</div>
+                            <div class="camera-timestamp" id="cameraTimestamp">23:47:12</div>
+                            <!-- Camera content will be added dynamically -->
+                        </div>
+                    </div>
+                    <div class="progress-text">LIVE FEED - SECURITY CAMERA #04</div>
+                `;
+                
+                terminalText.innerHTML += cameraHTML;
                 terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                
+                const cameraFootage = document.getElementById('cameraFootage');
+                const cameraTimestamp = document.getElementById('cameraTimestamp');
+                
+                // Create a fake person silhouette
+                const person = document.createElement('div');
+                person.style.position = 'absolute';
+                person.style.width = '40px';
+                person.style.height = '100px';
+                person.style.backgroundColor = '#333';
+                person.style.borderRadius = '20px';
+                person.style.bottom = '20px';
+                person.style.left = '50%';
+                person.style.transform = 'translateX(-50%)';
+                cameraFootage.appendChild(person);
+                
+                // Create random static effect
+                const staticOverlay = document.createElement('div');
+                staticOverlay.style.position = 'absolute';
+                staticOverlay.style.width = '100%';
+                staticOverlay.style.height = '100%';
+                staticOverlay.style.background = 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,0,0,0.05) 2px, rgba(255,0,0,0.05) 4px)';
+                staticOverlay.style.opacity = '0.5';
+                staticOverlay.style.animation = 'glitch 0.5s infinite';
+                cameraFootage.appendChild(staticOverlay);
+                
+                // Update timestamp every second
+                let seconds = 12;
+                const timestampInterval = setInterval(function() {
+                    seconds++;
+                    if (seconds >= 60) {
+                        seconds = 0;
+                    }
+                    cameraTimestamp.textContent = `23:47:${seconds < 10 ? '0' + seconds : seconds}`;
+                }, 1000);
+                
+                // Show completion message after 10 seconds
+                setTimeout(function() {
+                    clearInterval(timestampInterval);
+                    terminalText.innerHTML += `<br><br><span class="success">Hacking sequence completed successfully!</span><br>`;
+                    terminalText.innerHTML += `<span class="warning">All data extracted and backdoor established.</span><br><br>`;
+                    terminalText.innerHTML += `<span>System ready for new command...</span>`;
+                    terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                    
+                    // Re-enable input
+                    cmdInput.disabled = false;
+                    cmdInput.focus();
+                }, 10000); // Show camera for 10 seconds
             }
             
             // Add some random glitch effects
