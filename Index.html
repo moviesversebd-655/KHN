@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spidtrick AMS - Hacking Console</title>
+    <title>Spidtrick AMS - Advanced Hacking Console</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
@@ -173,6 +173,55 @@
             text-decoration: underline;
         }
 
+        /* Auto Hack Toggle */
+        .auto-hack-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #0f0;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            width: 40px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background-color: #0f0;
+        }
+
+        .toggle-knob {
+            width: 18px;
+            height: 18px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active .toggle-knob {
+            left: 21px;
+        }
+
+        .toggle-label {
+            color: #0f0;
+            font-size: 0.9rem;
+        }
+
         /* Processing Screen */
         .processing-screen {
             display: none;
@@ -221,6 +270,7 @@
             display: none;
             min-height: 100vh;
             padding: 20px;
+            padding-top: 80px;
         }
 
         .header {
@@ -274,11 +324,29 @@
             border: 1px solid transparent;
             transition: all 0.3s;
             text-align: center;
+            position: relative;
         }
 
         .icon-item:hover {
             border: 1px solid #0f0;
             background-color: rgba(0, 255, 0, 0.1);
+        }
+
+        .auto-hack-indicator {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+            display: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .icon-img {
@@ -356,11 +424,17 @@
             font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s;
+            position: relative;
         }
 
         .social-icon:hover {
             transform: scale(1.1);
             box-shadow: 0 0 15px currentColor;
+        }
+
+        .social-icon .auto-hack-indicator {
+            top: -5px;
+            right: -5px;
         }
 
         .copyright {
@@ -380,6 +454,7 @@
             background-color: #000;
             z-index: 500;
             padding: 20px;
+            padding-top: 80px;
             overflow-y: auto;
         }
 
@@ -412,6 +487,28 @@
             font-family: monospace;
             overflow-y: auto;
             margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+
+        .link-input-section {
+            margin-bottom: 20px;
+        }
+
+        .link-input {
+            width: 100%;
+            padding: 12px;
+            background-color: #000;
+            border: 1px solid #0f0;
+            color: #0f0;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .link-info {
+            color: #0ff;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: none;
         }
 
         /* Platform Hacking Modal */
@@ -434,6 +531,10 @@
             width: 90%;
             max-width: 600px;
             padding: 30px;
+        }
+
+        .link-input-container {
+            margin-bottom: 20px;
         }
 
         .step-container {
@@ -505,12 +606,98 @@
             0% { transform: scale(0.5); opacity: 1; }
             100% { transform: scale(3); opacity: 0; }
         }
+
+        /* Auto Hack Progress */
+        .auto-hack-progress {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #0f0;
+            padding: 15px;
+            width: 300px;
+            z-index: 100;
+            display: none;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-title {
+            color: #0f0;
+            font-size: 1rem;
+        }
+
+        .close-progress {
+            background: none;
+            border: none;
+            color: #f00;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .progress-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #333;
+            background: rgba(0, 255, 0, 0.05);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .item-name {
+            color: #0ff;
+            font-size: 0.9rem;
+        }
+
+        .item-status {
+            color: #0f0;
+            font-size: 0.8rem;
+        }
+
+        .item-progress-bar {
+            height: 4px;
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .item-progress-fill {
+            height: 100%;
+            background-color: #0f0;
+            width: 0%;
+            transition: width 0.3s;
+        }
     </style>
 </head>
 <body>
     <!-- Background Elements -->
     <div class="bg-image"></div>
     <canvas id="matrix-canvas"></canvas>
+
+    <!-- Auto Hack Toggle -->
+    <div class="auto-hack-toggle" id="auto-hack-toggle">
+        <div class="toggle-label">AUTO HACK</div>
+        <div class="toggle-switch" id="toggle-switch">
+            <div class="toggle-knob"></div>
+        </div>
+    </div>
+
+    <!-- Auto Hack Progress Panel -->
+    <div class="auto-hack-progress" id="auto-hack-progress">
+        <div class="progress-header">
+            <div class="progress-title">AUTO HACK PROGRESS</div>
+            <button class="close-progress" id="close-progress">×</button>
+        </div>
+        <div id="progress-items-container"></div>
+    </div>
 
     <!-- Landing Page -->
     <div class="landing-page" id="landing-page">
@@ -547,7 +734,7 @@
         <!-- Header -->
         <div class="header">
             <h1 class="hacking-header">ARKI - HACKING CONSOLE</h1>
-            <div class="console-text" id="console-message">SPIDTRICK CONSOLE v2.5.1 - READY</div>
+            <div class="console-text" id="console-message">SPIDTRICK CONSOLE v3.0 - AUTO HACK MODE READY</div>
         </div>
 
         <!-- Icons Grid -->
@@ -582,7 +769,13 @@
     <!-- Platform Hacking Modal -->
     <div class="platform-modal" id="platform-modal">
         <div class="platform-box">
-            <div class="step-container" id="step-container">
+            <div class="link-input-container" id="link-input-container">
+                <div class="step-header">ENTER TARGET LINK</div>
+                <input type="text" class="platform-input" id="platform-link-input" placeholder="Paste Facebook/Instagram/Twitter profile link...">
+                <div class="link-info" id="link-info"></div>
+                <button class="step-btn" id="process-link-btn" style="width: 100%;">PROCESS LINK</button>
+            </div>
+            <div class="step-container" id="step-container" style="display: none;">
                 <!-- Steps will be generated by JavaScript -->
             </div>
         </div>
@@ -626,6 +819,15 @@
         const toolPagesContainer = document.getElementById('tool-pages-container');
         const platformModal = document.getElementById('platform-modal');
         const stepContainer = document.getElementById('step-container');
+        const linkInputContainer = document.getElementById('link-input-container');
+        const platformLinkInput = document.getElementById('platform-link-input');
+        const processLinkBtn = document.getElementById('process-link-btn');
+        const linkInfo = document.getElementById('link-info');
+        const autoHackToggle = document.getElementById('auto-hack-toggle');
+        const toggleSwitch = document.getElementById('toggle-switch');
+        const autoHackProgress = document.getElementById('auto-hack-progress');
+        const closeProgressBtn = document.getElementById('close-progress');
+        const progressItemsContainer = document.getElementById('progress-items-container');
         
         // Global Variables
         let isSignUp = false;
@@ -633,6 +835,10 @@
         let currentToolPage = null;
         let currentPlatform = null;
         let currentStep = 1;
+        let isAutoHackEnabled = false;
+        let autoHackQueue = [];
+        let activeAutoHacks = [];
+        let extractedUsername = "";
         
         // Typing animation for landing page
         const typingText = document.getElementById('typing-text');
@@ -724,7 +930,100 @@
             // Generate icons
             generateIcons();
             generateSocialIcons();
+            
+            // Set up auto hack toggle
+            setupAutoHackToggle();
         });
+        
+        // Set up auto hack toggle
+        function setupAutoHackToggle() {
+            autoHackToggle.addEventListener('click', function() {
+                isAutoHackEnabled = !isAutoHackEnabled;
+                toggleSwitch.classList.toggle('active');
+                
+                if (isAutoHackEnabled) {
+                    consoleMessage.textContent = "AUTO HACK MODE ACTIVATED - ALL BUTTONS WILL AUTO-HACK";
+                    showAutoHackProgress();
+                    
+                    // Show indicators on all icons
+                    document.querySelectorAll('.icon-item, .social-icon').forEach(icon => {
+                        const indicator = icon.querySelector('.auto-hack-indicator');
+                        if (indicator) {
+                            indicator.style.display = 'block';
+                        }
+                    });
+                } else {
+                    consoleMessage.textContent = "AUTO HACK MODE DEACTIVATED";
+                    hideAutoHackProgress();
+                    
+                    // Hide indicators
+                    document.querySelectorAll('.auto-hack-indicator').forEach(indicator => {
+                        indicator.style.display = 'none';
+                    });
+                    
+                    // Clear queue
+                    autoHackQueue = [];
+                    activeAutoHacks = [];
+                }
+            });
+            
+            closeProgressBtn.addEventListener('click', function() {
+                autoHackProgress.style.display = 'none';
+            });
+        }
+        
+        // Show auto hack progress panel
+        function showAutoHackProgress() {
+            autoHackProgress.style.display = 'block';
+        }
+        
+        // Hide auto hack progress panel
+        function hideAutoHackProgress() {
+            autoHackProgress.style.display = 'none';
+        }
+        
+        // Add item to auto hack progress
+        function addAutoHackProgress(itemName) {
+            const itemId = 'progress-' + Date.now();
+            const progressItem = document.createElement('div');
+            progressItem.className = 'progress-item';
+            progressItem.id = itemId;
+            progressItem.innerHTML = `
+                <div class="item-header">
+                    <div class="item-name">${itemName}</div>
+                    <div class="item-status">0%</div>
+                </div>
+                <div class="item-progress-bar">
+                    <div class="item-progress-fill"></div>
+                </div>
+            `;
+            
+            progressItemsContainer.appendChild(progressItem);
+            
+            // Start progress animation
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 1;
+                const fill = progressItem.querySelector('.item-progress-fill');
+                const status = progressItem.querySelector('.item-status');
+                
+                if (fill && status) {
+                    fill.style.width = progress + '%';
+                    status.textContent = progress + '%';
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        if (progressItem.parentNode) {
+                            progressItem.parentNode.removeChild(progressItem);
+                        }
+                    }, 1000);
+                }
+            }, 50);
+            
+            return itemId;
+        }
         
         // Go to console button
         goToConsoleBtn.addEventListener('click', function() {
@@ -831,6 +1130,7 @@
         // Show main page
         function showMainPage() {
             mainPage.style.display = 'block';
+            autoHackToggle.style.display = 'flex';
             
             // Random console messages
             const messages = [
@@ -864,6 +1164,7 @@
                 iconElement.dataset.toolId = index;
                 
                 iconElement.innerHTML = `
+                    <div class="auto-hack-indicator"></div>
                     <div class="icon-img">
                         <i class="fas ${icon.icon}" style="color: ${icon.color}"></i>
                     </div>
@@ -871,7 +1172,13 @@
                 `;
                 
                 iconElement.addEventListener('click', function() {
-                    openToolPage(index);
+                    if (isAutoHackEnabled) {
+                        // Auto hack mode
+                        startAutoHack(index);
+                    } else {
+                        // Normal mode
+                        openToolPage(index);
+                    }
                 });
                 
                 iconsGrid.appendChild(iconElement);
@@ -881,21 +1188,21 @@
         // Generate social media icons
         function generateSocialIcons() {
             const platforms = [
-                { name: "Facebook", icon: "fa-facebook-f", color: "#1877f2" },
-                { name: "Telegram", icon: "fa-telegram", color: "#0088cc" },
-                { name: "WhatsApp", icon: "fa-whatsapp", color: "#25d366" },
-                { name: "Instagram", icon: "fa-instagram", color: "#e4405f" },
-                { name: "YouTube", icon: "fa-youtube", color: "#ff0000" },
-                { name: "TikTok", icon: "fa-tiktok", color: "#000000" },
-                { name: "Twitter", icon: "fa-twitter", color: "#1da1f2" },
-                { name: "Gmail", icon: "fa-envelope", color: "#ea4335" },
-                { name: "LinkedIn", icon: "fa-linkedin", color: "#0a66c2" },
-                { name: "Snapchat", icon: "fa-snapchat", color: "#fffc00" },
-                { name: "Discord", icon: "fa-discord", color: "#5865f2" },
-                { name: "Reddit", icon: "fa-reddit", color: "#ff4500" },
-                { name: "Skype", icon: "fa-skype", color: "#00aff0" },
-                { name: "Zoom", icon: "fa-video", color: "#2d8cff" },
-                { name: "PayPal", icon: "fa-paypal", color: "#003087" }
+                { name: "Facebook", icon: "fa-facebook-f", color: "#1877f2", domain: "facebook.com" },
+                { name: "Telegram", icon: "fa-telegram", color: "#0088cc", domain: "t.me" },
+                { name: "WhatsApp", icon: "fa-whatsapp", color: "#25d366", domain: "wa.me" },
+                { name: "Instagram", icon: "fa-instagram", color: "#e4405f", domain: "instagram.com" },
+                { name: "YouTube", icon: "fa-youtube", color: "#ff0000", domain: "youtube.com" },
+                { name: "TikTok", icon: "fa-tiktok", color: "#000000", domain: "tiktok.com" },
+                { name: "Twitter", icon: "fa-twitter", color: "#1da1f2", domain: "twitter.com" },
+                { name: "Gmail", icon: "fa-envelope", color: "#ea4335", domain: "gmail.com" },
+                { name: "LinkedIn", icon: "fa-linkedin", color: "#0a66c2", domain: "linkedin.com" },
+                { name: "Snapchat", icon: "fa-snapchat", color: "#fffc00", domain: "snapchat.com" },
+                { name: "Discord", icon: "fa-discord", color: "#5865f2", domain: "discord.com" },
+                { name: "Reddit", icon: "fa-reddit", color: "#ff4500", domain: "reddit.com" },
+                { name: "Skype", icon: "fa-skype", color: "#00aff0", domain: "skype.com" },
+                { name: "Zoom", icon: "fa-video", color: "#2d8cff", domain: "zoom.us" },
+                { name: "PayPal", icon: "fa-paypal", color: "#003087", domain: "paypal.com" }
             ];
             
             platforms.forEach(platform => {
@@ -904,15 +1211,224 @@
                 iconElement.style.backgroundColor = platform.color;
                 iconElement.style.color = "#ffffff";
                 iconElement.title = `Hack ${platform.name}`;
+                iconElement.dataset.platform = platform.name;
+                iconElement.dataset.domain = platform.domain;
                 
-                iconElement.innerHTML = `<i class="fab ${platform.icon}"></i>`;
+                iconElement.innerHTML = `
+                    <div class="auto-hack-indicator"></div>
+                    <i class="fab ${platform.icon}"></i>
+                `;
                 
                 iconElement.addEventListener('click', function() {
-                    openPlatformHack(platform.name);
+                    if (isAutoHackEnabled) {
+                        // Auto hack mode
+                        startPlatformAutoHack(platform.name);
+                    } else {
+                        // Normal mode
+                        openPlatformHack(platform.name);
+                    }
                 });
                 
                 socialIcons.appendChild(iconElement);
             });
+            
+            // Set up link processing
+            processLinkBtn.addEventListener('click', processLink);
+        }
+        
+        // Start auto hack for tool
+        function startAutoHack(toolId) {
+            const toolNames = [
+                "NETWORK SCANNER",
+                "PASSWORD CRACKER", 
+                "ENCRYPTION BREAKER",
+                "DATA INTERCEPTOR",
+                "SYSTEM EXPLOIT",
+                "FIREWALL BYPASS",
+                "LOCATION TRACKER",
+                "SOCIAL ENGINEERING",
+                "DDoS ATTACK",
+                "ROOT ACCESS"
+            ];
+            
+            const progressId = addAutoHackProgress(toolNames[toolId]);
+            
+            // Show in console
+            consoleMessage.textContent = `AUTO HACKING: ${toolNames[toolId]} - IN PROGRESS`;
+            
+            // Simulate hacking process
+            setTimeout(() => {
+                consoleMessage.textContent = `AUTO HACK COMPLETE: ${toolNames[toolId]} - SUCCESS`;
+                
+                // Show result
+                const results = [
+                    "23 DEVICES FOUND, 5 VULNERABLE TARGETS IDENTIFIED",
+                    "PASSWORD CRACKED: admin/123456",
+                    "ENCRYPTION BROKEN IN 2.3 SECONDS",
+                    "1247 DATA PACKETS INTERCEPTED",
+                    "SYSTEM EXPLOITED: ROOT ACCESS GRANTED",
+                    "FIREWALL BYPASSED: ALL PORTS OPEN",
+                    "TARGET LOCATED: 40.7128° N, 74.0060° W",
+                    "SOCIAL ENGINEERING: USER CREDENTIALS OBTAINED",
+                    "DDoS: TARGET OVERWHELMED WITH 10K REQUESTS/SEC",
+                    "ROOT ACCESS: FULL SYSTEM CONTROL ACHIEVED"
+                ];
+                
+                consoleMessage.textContent += " | RESULT: " + results[toolId];
+            }, 3000);
+        }
+        
+        // Start auto hack for platform
+        function startPlatformAutoHack(platformName) {
+            // First show link input
+            currentPlatform = platformName;
+            linkInputContainer.style.display = 'block';
+            stepContainer.style.display = 'none';
+            platformLinkInput.value = '';
+            linkInfo.style.display = 'none';
+            platformModal.style.display = 'flex';
+            
+            // Set placeholder based on platform
+            let placeholder = "Paste profile link...";
+            if (platformName === "Facebook") placeholder = "https://facebook.com/username";
+            else if (platformName === "Instagram") placeholder = "https://instagram.com/username";
+            else if (platformName === "Twitter") placeholder = "https://twitter.com/username";
+            else if (platformName === "YouTube") placeholder = "https://youtube.com/@username";
+            
+            platformLinkInput.placeholder = placeholder;
+            
+            // If auto hack is enabled, simulate automatic link input
+            if (isAutoHackEnabled) {
+                setTimeout(() => {
+                    // Generate a random username for demo
+                    const usernames = ["john_doe", "jane_smith", "hacker_pro", "cyber_ninja", "dark_knight"];
+                    const randomUser = usernames[Math.floor(Math.random() * usernames.length)];
+                    
+                    let fakeLink = "";
+                    if (platformName === "Facebook") fakeLink = `https://facebook.com/${randomUser}`;
+                    else if (platformName === "Instagram") fakeLink = `https://instagram.com/${randomUser}`;
+                    else if (platformName === "Twitter") fakeLink = `https://twitter.com/${randomUser}`;
+                    else if (platformName === "YouTube") fakeLink = `https://youtube.com/@${randomUser}`;
+                    else fakeLink = `https://${platformName.toLowerCase()}.com/${randomUser}`;
+                    
+                    platformLinkInput.value = fakeLink;
+                    extractedUsername = randomUser;
+                    
+                    // Auto-process after 1 second
+                    setTimeout(() => {
+                        processLink();
+                    }, 1000);
+                }, 500);
+            }
+        }
+        
+        // Process link input
+        function processLink() {
+            const link = platformLinkInput.value.trim();
+            if (!link) {
+                linkInfo.textContent = "Please enter a valid link";
+                linkInfo.style.color = "#ff0000";
+                linkInfo.style.display = 'block';
+                return;
+            }
+            
+            // Extract username from link
+            let username = "";
+            
+            // Common patterns for extracting usernames
+            if (link.includes("facebook.com/")) {
+                username = link.split("facebook.com/")[1].split("/")[0].split("?")[0];
+            } else if (link.includes("instagram.com/")) {
+                username = link.split("instagram.com/")[1].split("/")[0].split("?")[0];
+            } else if (link.includes("twitter.com/")) {
+                username = link.split("twitter.com/")[1].split("/")[0].split("?")[0];
+            } else if (link.includes("youtube.com/@")) {
+                username = link.split("youtube.com/@")[1].split("/")[0].split("?")[0];
+            } else if (link.includes("tiktok.com/@")) {
+                username = link.split("tiktok.com/@")[1].split("/")[0].split("?")[0];
+            } else {
+                // Try to extract username from any URL
+                const urlParts = link.split("/");
+                username = urlParts[urlParts.length - 1].split("?")[0];
+            }
+            
+            if (!username) {
+                linkInfo.textContent = "Could not extract username from link";
+                linkInfo.style.color = "#ff0000";
+                linkInfo.style.display = 'block';
+                return;
+            }
+            
+            extractedUsername = username;
+            linkInfo.textContent = `Username extracted: ${username}`;
+            linkInfo.style.color = "#0ff";
+            linkInfo.style.display = 'block';
+            
+            // Hide link input and show steps
+            linkInputContainer.style.display = 'none';
+            stepContainer.style.display = 'block';
+            
+            // Generate steps
+            stepContainer.innerHTML = '';
+            
+            const steps = [
+                { title: "TARGET VERIFICATION", content: `Verifying ${currentPlatform} user: ${username}` },
+                { title: "VULNERABILITY SCAN", content: `Scanning ${currentPlatform} profile for security vulnerabilities...` },
+                { title: "EXPLOIT SELECTION", content: `Selecting appropriate exploit for ${currentPlatform} API...` },
+                { title: "INJECTION POINT", content: `Finding injection point in ${currentPlatform} system...` },
+                { title: "FINAL CONFIRMATION", content: `Confirm target to initiate hack:` }
+            ];
+            
+            steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = `step ${index === 0 ? 'active' : ''}`;
+                stepElement.id = `step-${index + 1}`;
+                
+                let stepContent = step.content;
+                if (index === 0 || index === 4) {
+                    stepContent = `<div class="step-content">${step.content}</div>
+                                  <input type="text" class="platform-input" id="platform-input-${index + 1}" value="${username}" readonly>`;
+                } else {
+                    stepContent = `<div class="step-content">${step.content}</div>`;
+                }
+                
+                stepElement.innerHTML = `
+                    <div class="step-header">STEP ${index + 1}: ${step.title}</div>
+                    ${stepContent}
+                    <div class="step-buttons">
+                        ${index > 0 ? `<button class="step-btn" onclick="changeStep(${index})">BACK</button>` : '<div></div>'}
+                        ${index < steps.length - 1 ? `<button class="step-btn" onclick="changeStep(${index + 2})">NEXT</button>` : `<button class="step-btn" onclick="executePlatformHack()">CONFIRM & HACK</button>`}
+                    </div>
+                `;
+                
+                stepContainer.appendChild(stepElement);
+            });
+            
+            // If auto hack is enabled, auto-proceed through steps
+            if (isAutoHackEnabled) {
+                autoProceedSteps();
+            }
+        }
+        
+        // Auto proceed through steps
+        function autoProceedSteps() {
+            let step = 1;
+            const totalSteps = 5;
+            
+            function nextStep() {
+                if (step < totalSteps) {
+                    changeStep(step + 1);
+                    step++;
+                    setTimeout(nextStep, 1500);
+                } else {
+                    // Last step, execute hack
+                    setTimeout(() => {
+                        executePlatformHack();
+                    }, 1500);
+                }
+            }
+            
+            setTimeout(nextStep, 1000);
         }
         
         // Open tool page
@@ -942,33 +1458,21 @@
                     "ROOT ACCESS"
                 ];
                 
-                const toolDescriptions = [
-                    "Scanning network for vulnerabilities and open ports...",
-                    "Brute force password cracking algorithm initiated...",
-                    "Breaking encryption using quantum computing simulation...",
-                    "Intercepting data packets in transmission...",
-                    "Exploiting system vulnerabilities for access...",
-                    "Bypassing firewall security protocols...",
-                    "Tracking device location through IP triangulation...",
-                    "Social engineering attack simulation running...",
-                    "Distributed Denial of Service attack launched...",
-                    "Attempting to gain root access to system..."
-                ];
-                
                 toolPage.innerHTML = `
                     <div class="tool-header">
                         <h2>${toolNames[toolId]}</h2>
                         <button class="back-btn" onclick="closeToolPage(${toolId})">BACK TO CONSOLE</button>
                     </div>
                     <div class="tool-content">
-                        <div class="hacking-output" id="tool-output-${toolId}">
-                            > INITIALIZING ${toolNames[toolId]}...<br>
-                            > LOADING MODULES...<br>
-                            > ${toolDescriptions[toolId]}<br><br>
-                            > ENTER TARGET IP/URL/USERNAME:
+                        <div class="link-input-section">
+                            <input type="text" class="link-input" id="tool-link-${toolId}" placeholder="Enter target IP/URL...">
+                            <button class="execute-btn" onclick="executeToolWithLink(${toolId})" style="width: 100%;">EXECUTE</button>
                         </div>
-                        <input type="text" class="command-input" id="tool-input-${toolId}" placeholder="Enter target...">
-                        <button class="execute-btn" onclick="executeTool(${toolId})">EXECUTE</button>
+                        <div class="hacking-output" id="tool-output-${toolId}">
+> INITIALIZING ${toolNames[toolId]}...
+> LOADING MODULES...
+> READY FOR TARGET INPUT
+                        </div>
                     </div>
                 `;
                 
@@ -991,142 +1495,48 @@
             mainPage.style.display = 'block';
         };
         
-        // Execute tool command
-        window.executeTool = function(toolId) {
-            const input = document.getElementById(`tool-input-${toolId}`);
+        // Execute tool with link
+        window.executeToolWithLink = function(toolId) {
+            const input = document.getElementById(`tool-link-${toolId}`);
             const output = document.getElementById(`tool-output-${toolId}`);
             const target = input.value.trim();
             
             if (!target) {
-                output.innerHTML += '<br>> ERROR: NO TARGET SPECIFIED';
+                output.textContent += '\n> ERROR: NO TARGET SPECIFIED';
                 return;
             }
             
-            output.innerHTML += `<br>> TARGET SET: ${target}`;
-            output.innerHTML += '<br>> EXECUTING ATTACK...';
-            output.innerHTML += '<br>> [';
+            output.textContent += `\n> TARGET SET: ${target}`;
+            output.textContent += '\n> EXECUTING ATTACK...';
+            output.textContent += '\n> [';
             
             // Simulate progress bar
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    output.innerHTML += '=';
-                    output.scrollTop = output.scrollHeight;
-                }, i * 100);
-            }
-            
-            setTimeout(() => {
-                output.innerHTML += '] 100%';
-                output.innerHTML += '<br>> ATTACK SUCCESSFUL!';
-                output.innerHTML += '<br>> DATA RETRIEVED:';
-                output.innerHTML += '<br>> --------------------------';
-                output.innerHTML += '<br>> USER: admin';
-                output.innerHTML += '<br>> PASSWORD: ********';
-                output.innerHTML += '<br>> IP: 192.168.1.' + Math.floor(Math.random() * 255);
-                output.innerHTML += '<br>> LOCATION: ' + ['USA', 'Germany', 'China', 'Russia', 'Japan'][Math.floor(Math.random() * 5)];
-                output.innerHTML += '<br>> --------------------------';
-                output.innerHTML += '<br>> ENTER NEW TARGET:';
+            let progress = "";
+            const interval = setInterval(() => {
+                progress += "=";
+                output.textContent = output.textContent.substring(0, output.textContent.lastIndexOf('[') + 1) + progress;
                 output.scrollTop = output.scrollHeight;
                 
-                // Clear input
-                input.value = '';
-            }, 2500);
+                if (progress.length >= 20) {
+                    clearInterval(interval);
+                    output.textContent += '] 100%';
+                    output.textContent += '\n> ATTACK SUCCESSFUL!';
+                    output.textContent += '\n> DATA RETRIEVED:';
+                    output.textContent += '\n> --------------------------';
+                    output.textContent += '\n> TARGET: ' + target;
+                    output.textContent += '\n> STATUS: COMPROMISED';
+                    output.textContent += '\n> ACCESS LEVEL: ROOT';
+                    output.textContent += '\n> IP: 192.168.1.' + Math.floor(Math.random() * 255);
+                    output.textContent += '\n> LOCATION: ' + ['USA', 'Germany', 'China', 'Russia', 'Japan'][Math.floor(Math.random() * 5)];
+                    output.textContent += '\n> --------------------------';
+                    output.textContent += '\n> ENTER NEW TARGET:';
+                    output.scrollTop = output.scrollHeight;
+                    
+                    // Clear input
+                    input.value = '';
+                }
+            }, 100);
         };
-        
-        // Execute main console command
-        executeBtn.addEventListener('click', executeCommand);
-        commandInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                executeCommand();
-            }
-        });
-        
-        function executeCommand() {
-            const command = commandInput.value.trim().toUpperCase();
-            if (!command) return;
-            
-            // Add command to console message
-            consoleMessage.textContent = `> ${command}`;
-            
-            // Process command
-            let response = "";
-            if (command.includes("SCAN") || command.includes("NETWORK")) {
-                response = "SCANNING NETWORK... FOUND 23 DEVICES. 3 VULNERABLE TARGETS IDENTIFIED.";
-            } else if (command.includes("HACK") || command.includes("ACCESS")) {
-                response = "INITIATING PENETRATION... BYPASSING SECURITY... ACCESS GRANTED.";
-            } else if (command.includes("ENCRYPT") || command.includes("DECRYPT")) {
-                response = "RUNNING QUANTUM DECRYPTION ALGORITHM... ENCRYPTION BROKEN IN 2.4 SECONDS.";
-            } else if (command.includes("HELP") || command === "?") {
-                response = "AVAILABLE COMMANDS: SCAN, HACK, ENCRYPT, DECRYPT, TRACK, DDOS, EXPLOIT, CLEAR";
-            } else if (command.includes("CLEAR") || command === "CLS") {
-                consoleMessage.textContent = "CONSOLE CLEARED. READY.";
-                commandInput.value = '';
-                return;
-            } else if (command.includes("TRACK") || command.includes("LOCATE")) {
-                response = "TRACKING DEVICE... LOCATION: 40.7128° N, 74.0060° W (NEW YORK CITY)";
-            } else if (command.includes("DDOS") || command.includes("FLOOD")) {
-                response = "LAUNCHING DDoS ATTACK... 10,000 BOTS ACTIVATED. TARGET OVERWHELMED.";
-            } else {
-                response = `COMMAND "${command}" NOT RECOGNIZED. TYPE "HELP" FOR AVAILABLE COMMANDS.`;
-            }
-            
-            // Show response with typing effect
-            let i = 0;
-            consoleMessage.textContent = ">";
-            function typeResponse() {
-                if (i < response.length) {
-                    consoleMessage.textContent += response.charAt(i);
-                    i++;
-                    setTimeout(typeResponse, 30);
-                }
-            }
-            
-            setTimeout(typeResponse, 500);
-            commandInput.value = '';
-        }
-        
-        // Open platform hacking modal
-        function openPlatformHack(platform) {
-            currentPlatform = platform;
-            currentStep = 1;
-            
-            // Generate steps
-            stepContainer.innerHTML = '';
-            
-            const steps = [
-                { title: "TARGET SELECTION", content: `Enter the ${platform} ID/Username to target:` },
-                { title: "VULNERABILITY SCAN", content: `Scanning ${platform} for security vulnerabilities...` },
-                { title: "EXPLOIT SELECTION", content: `Selecting appropriate exploit for ${platform}...` },
-                { title: "INJECTION POINT", content: `Finding injection point in ${platform} API...` },
-                { title: "FINAL CONFIRMATION", content: `Confirm target ID to initiate hack:` }
-            ];
-            
-            steps.forEach((step, index) => {
-                const stepElement = document.createElement('div');
-                stepElement.className = `step ${index === 0 ? 'active' : ''}`;
-                stepElement.id = `step-${index + 1}`;
-                
-                let stepContent = step.content;
-                if (index === 0 || index === 4) {
-                    stepContent = `<div class="step-content">${step.content}</div>
-                                  <input type="text" class="platform-input" id="platform-input-${index + 1}" placeholder="Enter ${platform} ID...">`;
-                } else {
-                    stepContent = `<div class="step-content">${step.content}</div>`;
-                }
-                
-                stepElement.innerHTML = `
-                    <div class="step-header">STEP ${index + 1}: ${step.title}</div>
-                    ${stepContent}
-                    <div class="step-buttons">
-                        ${index > 0 ? `<button class="step-btn" onclick="changeStep(${index})">BACK</button>` : '<div></div>'}
-                        ${index < steps.length - 1 ? `<button class="step-btn" onclick="changeStep(${index + 2})">NEXT</button>` : `<button class="step-btn" onclick="executePlatformHack()">CONFIRM</button>`}
-                    </div>
-                `;
-                
-                stepContainer.appendChild(stepElement);
-            });
-            
-            platformModal.style.display = 'flex';
-        }
         
         // Change step in platform hack
         window.changeStep = function(stepNumber) {
@@ -1140,12 +1550,6 @@
         
         // Execute platform hack
         window.executePlatformHack = function() {
-            const targetId = document.getElementById('platform-input-5').value.trim();
-            if (!targetId) {
-                alert("Please enter a target ID");
-                return;
-            }
-            
             // Show hacking animation
             stepContainer.innerHTML = `
                 <div class="hack-animation">
@@ -1155,7 +1559,7 @@
                     </div>
                     <div id="hack-status" style="font-family: monospace; text-align: left; background: #000; padding: 15px; border: 1px solid #0f0; margin: 20px 0; max-height: 300px; overflow-y: auto;">
                         > INITIATING HACK ON ${currentPlatform.toUpperCase()}<br>
-                        > TARGET: ${targetId}<br>
+                        > TARGET: ${extractedUsername}<br>
                     </div>
                     <button class="step-btn" onclick="closePlatformHack()">CLOSE</button>
                 </div>
@@ -1189,14 +1593,21 @@
                         hackStatus.innerHTML += '<br>> HACK COMPLETED SUCCESSFULLY!<br><br>';
                         hackStatus.innerHTML += '> RETRIEVED DATA:<br>';
                         hackStatus.innerHTML += '> -------------------------<br>';
-                        hackStatus.innerHTML += `> ${currentPlatform} ID: ${targetId}<br>`;
-                        hackStatus.innerHTML += '> EMAIL: ' + targetId.toLowerCase().replace(/\s/g, '') + '@email.com<br>';
+                        hackStatus.innerHTML += `> ${currentPlatform} ID: ${extractedUsername}<br>`;
+                        hackStatus.innerHTML += '> EMAIL: ' + extractedUsername.toLowerCase().replace(/\s/g, '') + '@email.com<br>';
                         hackStatus.innerHTML += '> PASSWORD: **********<br>';
                         hackStatus.innerHTML += '> LAST LOGIN: ' + new Date().toLocaleString() + '<br>';
                         hackStatus.innerHTML += '> IP ADDRESS: 192.168.' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '<br>';
                         hackStatus.innerHTML += '> LOCATION: ' + ['USA', 'Germany', 'UK', 'Canada', 'Australia'][Math.floor(Math.random() * 5)] + '<br>';
+                        hackStatus.innerHTML += '> FRIENDS/FOLLOWERS: ' + Math.floor(Math.random() * 10000) + '<br>';
+                        hackStatus.innerHTML += '> PHONE: +1-' + Math.floor(Math.random() * 900) + '-' + Math.floor(Math.random() * 900) + '-' + (1000 + Math.floor(Math.random() * 9000)) + '<br>';
                         hackStatus.innerHTML += '> -------------------------<br>';
                         hackStatus.scrollTop = hackStatus.scrollHeight;
+                        
+                        // If in auto hack mode, show in console
+                        if (isAutoHackEnabled) {
+                            consoleMessage.textContent = `AUTO HACK COMPLETE: ${currentPlatform} - USER: ${extractedUsername}`;
+                        }
                     }, 1000);
                 }
             }
@@ -1207,7 +1618,70 @@
         // Close platform hack modal
         window.closePlatformHack = function() {
             platformModal.style.display = 'none';
+            
+            // Reset for next use
+            linkInputContainer.style.display = 'block';
+            stepContainer.style.display = 'none';
+            platformLinkInput.value = '';
+            linkInfo.style.display = 'none';
         };
+        
+        // Execute main console command
+        executeBtn.addEventListener('click', executeCommand);
+        commandInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                executeCommand();
+            }
+        });
+        
+        function executeCommand() {
+            const command = commandInput.value.trim().toUpperCase();
+            if (!command) return;
+            
+            // Add command to console message
+            consoleMessage.textContent = `> ${command}`;
+            
+            // Process command
+            let response = "";
+            if (command.includes("SCAN") || command.includes("NETWORK")) {
+                response = "SCANNING NETWORK... FOUND 23 DEVICES. 3 VULNERABLE TARGETS IDENTIFIED.";
+            } else if (command.includes("HACK") || command.includes("ACCESS")) {
+                response = "INITIATING PENETRATION... BYPASSING SECURITY... ACCESS GRANTED.";
+            } else if (command.includes("ENCRYPT") || command.includes("DECRYPT")) {
+                response = "RUNNING QUANTUM DECRYPTION ALGORITHM... ENCRYPTION BROKEN IN 2.4 SECONDS.";
+            } else if (command.includes("HELP") || command === "?") {
+                response = "AVAILABLE COMMANDS: SCAN, HACK, ENCRYPT, DECRYPT, TRACK, DDOS, EXPLOIT, CLEAR, AUTOHACK";
+            } else if (command.includes("AUTOHACK") || command.includes("AUTO")) {
+                response = "TOGGLING AUTO HACK MODE...";
+                setTimeout(() => {
+                    autoHackToggle.click();
+                }, 500);
+            } else if (command.includes("CLEAR") || command === "CLS") {
+                consoleMessage.textContent = "CONSOLE CLEARED. READY.";
+                commandInput.value = '';
+                return;
+            } else if (command.includes("TRACK") || command.includes("LOCATE")) {
+                response = "TRACKING DEVICE... LOCATION: 40.7128° N, 74.0060° W (NEW YORK CITY)";
+            } else if (command.includes("DDOS") || command.includes("FLOOD")) {
+                response = "LAUNCHING DDoS ATTACK... 10,000 BOTS ACTIVATED. TARGET OVERWHELMED.";
+            } else {
+                response = `COMMAND "${command}" NOT RECOGNIZED. TYPE "HELP" FOR AVAILABLE COMMANDS.`;
+            }
+            
+            // Show response with typing effect
+            let i = 0;
+            consoleMessage.textContent = ">";
+            function typeResponse() {
+                if (i < response.length) {
+                    consoleMessage.textContent += response.charAt(i);
+                    i++;
+                    setTimeout(typeResponse, 30);
+                }
+            }
+            
+            setTimeout(typeResponse, 500);
+            commandInput.value = '';
+        }
         
         // Handle back button (browser)
         window.onpopstate = function(event) {
@@ -1234,6 +1708,11 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
+        
+        // Open platform hack function
+        window.openPlatformHack = function(platformName) {
+            startPlatformAutoHack(platformName);
+        };
     </script>
 </body>
 </html>
